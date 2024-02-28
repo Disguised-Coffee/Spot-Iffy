@@ -1,0 +1,78 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    scroll-behavior: smooth;
+    background-color: #000;
+    color: white;
+    font-family: "Lato";
+    font-weight: 400;
+}
+
+
+#user{
+    font-weight: bold;
+    font-style: italic;
+}
+
+
+
+div.header{
+    margin-top: 17vh;
+    display: flex;
+    width: 50%;
+}
+
+div.header img{
+    width: 25%;
+    height:max-content;
+}
+
+div.desc{
+    margin-left: 2vw;
+}
+
+div.desc h1{
+    font-size: 4.5rem;
+    font-weight: 900;
+    margin: 0;
+
+}
+
+div.desc h2{
+    font-size: 1.6rem;
+    font-weight: 400;
+    font-style: italic;
+    margin: 0;
+}
+
+div.desc p{
+    margin-top: 2rem;
+    font-weight:300;
+}
+
+tr img{
+    margin-left: 10px;
+    display:inline-block; 
+    vertical-align: middle;
+    width: 2rem;
+    float: left;
+}
+
+table{
+    margin-top: 5vh;
+    width: 56%;
+    border-collapse: collapse;
+    
+}
+tr:first-child {
+    border-bottom: 1px solid white;
+}
+
+tr:nth-of-type(even){
+    background-color: #121212;
+}
+
+.songinfo p{
+    margin:0;
+}

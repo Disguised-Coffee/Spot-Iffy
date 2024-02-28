@@ -1,0 +1,49 @@
+.topBar{
+    position:fixed;
+    width:100%;
+    left:0;
+    background-color:#2F1010;
+    min-height:10vh;
+    width:100vw;
+    margin: 0;
+    top:0;   
+
+    padding-top: 2px;
+    padding-bottom: 2px;
+    /* Border */
+    box-shadow:
+    0 0 0 5px #C21313,
+    0 0 0 10px #F80F0F;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo{
+    font-family: "Bree Serif";
+    font-size: 52px;
+    margin: 0;
+    color:white;
+    padding-left: 3vw;
+
+}
+
+#separater{
+    font-size: bold;
+    font-size: 40px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.topBar ul{
+    font-family: "Lato";
+    font-style: italic;
+    font-size: 36px;
+    margin: 0;
+    padding:0;
+    padding-right: 3vw;
+    list-style-type: none;
+    color:white;
+    display: flex;
+    align-items: center;
+}

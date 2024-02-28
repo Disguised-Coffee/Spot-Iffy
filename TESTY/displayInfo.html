@@ -1,0 +1,16 @@
+<label>Enter Youtube API key</label><input id="api"><br><br>
+
+<label>Type your song in the box!</label><input id="query"><br>
+<label>Max search results (lower numbers are faster!) </label>
+<select name="numbers" id="limit">
+    <option value="3" selected>3</option>
+    <option value="5">5</option>
+    <option value="7">7</option>
+    <option value="10">10</option>
+</select><br>
+    <button onclick="submitYoutubeSearch()">~ Press me to search Youtube! ~</button><br>
+<div class="info"></div>
+
+
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="queryHandler.js"></script>
