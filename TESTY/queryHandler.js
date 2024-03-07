@@ -9,6 +9,7 @@ class videoInfo{
     videoId;
     imagesrc;
     vidCreator;
+    duration;
     /**
      * 
      * @param {*} title  - Title of the song
@@ -16,19 +17,20 @@ class videoInfo{
      * @param {*} imagesrc - src link of video
      * @param {*} vidCreator - artist/channel video is from
      */
-    constructor(title, videoId, imagesrc, vidCreator){
+    constructor(title, videoId, imagesrc, vidCreator, duration){
         this.title = title;
         this.videoId = videoId;
         this.imagesrc = imagesrc;
         this.vidCreator = vidCreator;
+        this.duration = duration;
     }
 }
 
 //array for all videoInfo instances saves
-let searchingSongList = [];
+let savedSongsList = [];
 
 //array for all videoInfo instances found from query
-
+let searchingSongList = [];
 
 
 
@@ -39,12 +41,20 @@ async function submitYoutubeSearch() {
     const apiValue = document.querySelector("#api").value;
     if(apiValue === ""){
         document.querySelector("body .info").innerHTML = "You need an API key to search!";
+        return;
     }
+    document.querySelector("body .info").innerHTML = "Searching...";
     //call APIapi
     const query = document.querySelector("#query").value;
     const MAX_SEARCHES  = document.querySelector("#limit").value;
     const resp = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${MAX_SEARCHES}&q=${query}&type=video&key=${apiValue}`);
     const j = await resp.json();
+    
+    // have a handler for bad API keys
+    if(j["error"]){
+        document.querySelector("body .info").innerHTML = `That wasn't a valid API key (got error code ${j["error"]["code"]})!`;
+        return;
+    }
 
     // Populate an array
     j["items"].forEach(element => {
@@ -53,7 +63,9 @@ async function submitYoutubeSearch() {
             element["snippet"]["title"],
             element["id"]["videoId"],
             element["snippet"]["thumbnails"]["default"]["url"],
-            element["snippet"]["channelTitle"]
+            element["snippet"]["channelTitle"],
+            // function to get duration of vid.
+            getVidDuration(element["id"]["videoId"], apiValue)
         )
         searchingSongList.push(song);
     });
@@ -64,7 +76,9 @@ function updateList(){
     //remove old content
     document.querySelector("body .info").innerHTML = "";
     //make instances
+    let i = 0;
     searchingSongList.forEach((songInstance)=>{
+        // TODO make this image clickable with an attirbute tag
         let image = document.createElement("img");
         image.src = songInstance.imagesrc;
         
@@ -74,13 +88,93 @@ function updateList(){
         let artist = document.createElement("p");
         artist.innerText = songInstance.vidCreator;
 
+        //need vid duration as well!
+        let duration = document.createElement("p");
+        duration.innerHTML = htmlReformatTime(songInstance.duration);
+
+        //need button for saving.
+        let saveButton = document.createElement("button");
+        saveButton.innerHTML = "Click me to save this song!";
+        saveButton.id = i;
+        saveButton.onclick = ()=> {
+            // something was being glitchy when I left it without 
+            // the shorthand function maker...
+            saveThisSong(saveButton.id);
+        }
+        // console.log(saveButton);
+
         let div = document.createElement("div");
+        
         div.appendChild(image);
         div.appendChild(title);
+        div.appendChild(duration)
         div.appendChild(artist);
+        div.appendChild(saveButton);
         document.querySelector("body .info").appendChild(div);
+        i++;
+        // console.log("Created new instance");
     })
 }
 
+// saves the song depending what's on the screen right now.
+function saveThisSong(id){
+    savedSongsList.push(searchingSongList[id]);
+    // Currently set to remove all of the content in the div after saving.
+    document.querySelector("body .info").innerHTML = "";
+    console.log(savedSongsList);
+}
 
+/**
+ * 
+ * @param {*} videoId - ID of video to search
+ * @param {*} apiValue - API key
+ * @returns time of video in special format.
+ */
+async function getVidDuration(videoId, apiValue){
+    const resp = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${apiValue}`);
+    const j = await resp.json();
+    return reformatTime(j["items"][0]["contentDetails"]["duration"]);
+}
+
+/**
+ * 
+ * @param {*} time inputted time in strange ISO 8601
+ * @returns  NaN if couldn't format, array if successful.
+ */
+function reformatTime(time){
+    // from https://stackoverflow.com/questions/19061360/how-to-convert-youtube-api-duration-iso-8601-duration-in-the-format-ptms-to
+    var reptms = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/;
+    var hours = 0, minutes = 0, seconds = 0, totalseconds;
+
+    if (reptms.test(time)) {
+        var matches = reptms.exec(time);
+        if (matches[1]) hours = Number(matches[1]);
+        if (matches[2]) minutes = Number(matches[2]);
+        if (matches[3]) seconds = Number(matches[3]);
+        return [hours, minutes, seconds]
+    }
+    return NaN
+}
+
+function htmlReformatTime(aot){
+    console.log("html format" + aot)
+    console.log(aot);
+    let tor =  "";
+    if(aot[1]) tor += aot[1] + ":";
+    if(aot[2])
+    {
+        tor += aot[2] + ":";
+    }  
+    else{
+        tor += "0:";
+    }
+    if(aot[3])
+    {
+        tor += aot[3];
+    }
+    else{
+        tor += "00";
+    }
+    return tor;
+}
 // testyoutube();
