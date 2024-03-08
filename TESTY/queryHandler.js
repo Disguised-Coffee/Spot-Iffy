@@ -9,7 +9,7 @@ class videoInfo{
     videoId;
     imagesrc;
     vidCreator;
-    duration;
+    duration = ""; // we'll populate this later
     /**
      * 
      * @param {*} title  - Title of the song
@@ -17,12 +17,11 @@ class videoInfo{
      * @param {*} imagesrc - src link of video
      * @param {*} vidCreator - artist/channel video is from
      */
-    constructor(title, videoId, imagesrc, vidCreator, duration){
+    constructor(title, videoId, imagesrc, vidCreator){
         this.title = title;
         this.videoId = videoId;
         this.imagesrc = imagesrc;
         this.vidCreator = vidCreator;
-        this.duration = duration;
     }
 }
 
@@ -57,18 +56,43 @@ async function submitYoutubeSearch() {
     }
 
     // Populate an array
-    j["items"].forEach(element => {
+    j["items"].forEach(async element => {
         // Data structure to pass into another JS file?
         let song = new videoInfo(
             element["snippet"]["title"],
             element["id"]["videoId"],
             element["snippet"]["thumbnails"]["default"]["url"],
-            element["snippet"]["channelTitle"],
-            // function to get duration of vid.
-            getVidDuration(element["id"]["videoId"], apiValue)
+            element["snippet"]["channelTitle"]
         )
         searchingSongList.push(song);
     });
+
+    console.log(searchingSongList);
+
+    // queue the funnies
+    let q = "";
+    // THEN put the IDs in a queue to get the IDs
+    searchingSongList.forEach((song)=>{
+        q += song.videoId + ","
+        console.log(q)
+    })
+    //remove ending
+    q = q.substring(0,q.length - 1);
+    
+
+    console.log(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${q}&key=${apiValue}`);
+    // submit to queue
+    const resp_d = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${q}&key=${apiValue}`);
+    const j_d = await resp_d.json();
+    console.log(j_d)
+
+    // for loop here to parse the obj
+    for(let i = 0; i < searchingSongList.length; i++){
+        console.log(j_d["items"][i]["contentDetails"]);
+        searchingSongList[i].duration = reformatTime(j_d["items"][i]["contentDetails"]["duration"]);
+        console.log(searchingSongList[i].duration);
+    }
+
     updateList()
 }
 
@@ -90,7 +114,7 @@ function updateList(){
 
         //need vid duration as well!
         let duration = document.createElement("p");
-        duration.innerHTML = htmlReformatTime(songInstance.duration);
+        duration.innerHTML = "Duration: "+ htmlReformatTime(songInstance.duration);
 
         //need button for saving.
         let saveButton = document.createElement("button");
@@ -157,20 +181,18 @@ function reformatTime(time){
 }
 
 function htmlReformatTime(aot){
-    console.log("html format" + aot)
-    console.log(aot);
     let tor =  "";
-    if(aot[1]) tor += aot[1] + ":";
-    if(aot[2])
+    if(aot[0]) tor += aot[0] + ":";
+    if(aot[1])
     {
-        tor += aot[2] + ":";
+        tor += aot[1] + ":";
     }  
     else{
         tor += "0:";
     }
-    if(aot[3])
+    if(aot[2])
     {
-        tor += aot[3];
+        tor += aot[2];
     }
     else{
         tor += "00";
