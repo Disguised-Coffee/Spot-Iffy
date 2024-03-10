@@ -6,15 +6,17 @@
 
 <!-- REPLACE THIS WITH A SLIDER IN FINAL -->
 <!-- https://www.w3schools.com/howto/howto_js_rangeslider.asp -->
-<select name="numbers" id="limit">
-    <option value="3" selected>3</option>
-    <option value="5">5</option>
-    <option value="7">7</option>
-    <option value="10">10</option>
-</select><br>
+
+<div class="slidecontainer">
+    <input name="test" type="range" min="1" max="10" value="3" class="slider" id="myRange">
+    <p>Value: <span id="demo"></span></p>
+</div>
+<br>
     <button onclick="submitYoutubeSearch()">~ Press me to search Youtube! ~</button><br>
 <div class="info"></div>
 
 
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="queryHandler.js"></script>
+<script src="testCrossRef.js"></script>
+<link href="slidebar.css" rel="stylesheet" type="text/css" />

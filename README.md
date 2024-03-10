@@ -1,3 +1,2 @@
-# Spot Iffy
-## <i>the alternate Spotify</i>
+# Spot Iffy <i> ~the alternate Spotify~</i>
 

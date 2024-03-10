@@ -7,13 +7,13 @@
     width:100vw;
     margin: 0;
     top:0;   
-
+    
     padding-top: 2px;
     padding-bottom: 2px;
     /* Border */
     box-shadow:
-    0 0 0 5px #C21313,
-    0 0 0 10px #F80F0F;
+    0 0 0 5px var(--main-color),
+    0 0 0 10px var(--highlight-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -37,6 +37,7 @@
 
 .topBar ul{
     font-family: "Lato";
+    font-weight: 400;
     font-style: italic;
     font-size: 36px;
     margin: 0;
@@ -46,4 +47,10 @@
     color:white;
     display: flex;
     align-items: center;
+}
+
+ul li a{
+    text-decoration: none;
+    color:white;
+    font-style: normal;
 }

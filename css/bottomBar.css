@@ -1,0 +1,18 @@
+.bottomBar{
+    position:fixed;
+    left:0;
+    background-color:var(--alternation-color);
+    min-height:10vh;
+    width:100vw;
+    margin: 0;
+    bottom:0;   
+
+    padding-top: 2px;
+    padding-bottom: 2px;
+    /* Border */
+    box-shadow:
+    0 0 0 5px var(--main-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

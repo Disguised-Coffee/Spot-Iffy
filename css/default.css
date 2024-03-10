@@ -1,3 +1,37 @@
+@import url("topBar.css");
+@import url("bottomBar.css");
+@import url("widget.css");
+/* Fonts */
+@import url("https://fonts.googleapis.com/css?family=Lato:light,lightitalic,bold,bolditalic,italic|IBM+Plex+Sans:bold,bolditalic,italic|Bree+Serif");
+
+:root{
+    --main-color: #C21313;
+    --highlight-color: #F80F0F;
+    --bg-color: #000;
+    --alt-bg-color:#1e1e1e;
+    --alternation-color: #121212;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: var(--alt-bg-color);
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--alternation-color);
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
 body{
     display: flex;
     flex-direction: column;
@@ -56,7 +90,7 @@ tr img{
     display:inline-block; 
     vertical-align: middle;
     width: 2rem;
-    float: left;
+    
 }
 
 table{

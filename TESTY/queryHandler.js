@@ -1,3 +1,4 @@
+let helloThere = "Hi!";
 /**
  * Stores information for usage with YTPlayer.
  * 
@@ -45,27 +46,38 @@ async function submitYoutubeSearch() {
     document.querySelector("body .info").innerHTML = "Searching...";
     //call APIapi
     const query = document.querySelector("#query").value;
-    const MAX_SEARCHES  = document.querySelector("#limit").value;
-    const resp = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${MAX_SEARCHES}&q=${query}&type=video&key=${apiValue}`);
-    const j = await resp.json();
-    
-    // have a handler for bad API keys
-    if(j["error"]){
-        document.querySelector("body .info").innerHTML = `That wasn't a valid API key (got error code ${j["error"]["code"]})!`;
-        return;
-    }
+    const MAX_SEARCHES  = document.getElementById("myRange").value;
+    // do some promise stuff here: TODO
+    // Handle internet disconnection
+    try{
+        
+        const resp = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${MAX_SEARCHES}&q=${query}&type=video&key=${apiValue}`);
+        const j = await resp.json();
 
-    // Populate an array
-    j["items"].forEach(async element => {
-        // Data structure to pass into another JS file?
-        let song = new videoInfo(
-            element["snippet"]["title"],
-            element["id"]["videoId"],
-            element["snippet"]["thumbnails"]["default"]["url"],
-            element["snippet"]["channelTitle"]
-        )
-        searchingSongList.push(song);
-    });
+        // have a handler for bad API keys
+        if(j["error"]){
+            document.querySelector("body .info").innerHTML = `That wasn't a valid API key (got error code ${j["error"]["code"]})!`;
+            return;
+        }
+
+        // Populate an array
+        j["items"].forEach(async element => {
+            // Data structure to pass into another JS file?
+            let song = new videoInfo(
+                element["snippet"]["title"],
+                element["id"]["videoId"],
+                element["snippet"]["thumbnails"]["default"]["url"],
+                element["snippet"]["channelTitle"]
+            )
+            searchingSongList.push(song);
+        });
+    }
+    catch(ERR_INTERNET_DISCONNECTED){
+        console.log("Couldn't finish: Disconnected!");
+        document.querySelector("body .info").innerHTML = "You're disconnected from the internet!";
+        return;
+        
+    }
 
     console.log(searchingSongList);
 
@@ -192,7 +204,12 @@ function htmlReformatTime(aot){
     }
     if(aot[2])
     {
-        tor += aot[2];
+        if(aot[2] < 10){
+            tor += "0" + aot[2];
+        }
+        else{
+            tor += aot[2];
+        }
     }
     else{
         tor += "00";
