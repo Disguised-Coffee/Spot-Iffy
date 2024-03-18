@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <!-- https://developers.google.com/youtube/iframe_api_reference#Playback_controls -->
+    <!-- Thank you Google for nice documentation. -->
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <div id="player"></div>
+
+    <button id="pause">pause</button>
+
+    <button id="play">Click me!</button>
+
+    
+    <p>Some information</p>
+    <caption id="info"></caption>
+
+    <label>Enter Youtube API key</label><input type="text" id="api"><br><br>
+
+    <label>Type your song in the box!</label><input type="text" id="query"><br>
+    <label>Max search results (lower numbers are faster!) </label>
+
+    <!-- REPLACE THIS WITH A SLIDER IN FINAL -->
+    <!-- https://www.w3schools.com/howto/howto_js_rangeslider.asp -->
+
+    <div class="slidecontainer">
+        <input name="test" type="range" min="1" max="10" value="3" class="slider" id="myRange">
+        <p>Value: <span id="demo"></span></p>
+    </div>
+    <br>
+        <button onclick="submitYoutubeSearch()">~ Press me to search Youtube! ~</button><br>
+    <div class="info"></div>
+
+
+    <script src="https://apis.google.com/js/api.js"></script>
+    <!-- <script src="queryHandler.js"></script> -->
+    <script src="../js/ytPlayerHandler.js"></script>
+    <link href="slidebar.css" rel="stylesheet" type="text/css" />
+
+  </body>
+</html>
