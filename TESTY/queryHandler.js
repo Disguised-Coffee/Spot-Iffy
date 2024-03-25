@@ -1,3 +1,4 @@
+let helloThere = "Hi!";
 /**
  * Stores information for usage with YTPlayer.
  * 
@@ -114,14 +115,21 @@ function updateList(){
     let i = 0;
     searchingSongList.forEach((songInstance)=>{
         // TODO make this image clickable with an attirbute tag
+        
         let image = document.createElement("img");
         image.src = songInstance.imagesrc;
-        
+
+        let textWrapper = document.createElement("div");
+        textWrapper.classList.add("textWrapper");
+
         let title = document.createElement("h1");
         title.innerText = songInstance.title;
         
         let artist = document.createElement("p");
         artist.innerText = songInstance.vidCreator;
+
+        textWrapper.appendChild(title);
+        textWrapper.appendChild(artist);
 
         //need vid duration as well!
         let duration = document.createElement("p");
@@ -139,11 +147,11 @@ function updateList(){
         // console.log(saveButton);
 
         let div = document.createElement("div");
+        div.classList.add("songInstance")
         
         div.appendChild(image);
-        div.appendChild(title);
-        div.appendChild(duration)
-        div.appendChild(artist);
+        div.appendChild(textWrapper);
+        div.appendChild(duration);
         div.appendChild(saveButton);
         document.querySelector("body .info").appendChild(div);
         i++;
@@ -157,6 +165,9 @@ function saveThisSong(id){
     // Currently set to remove all of the content in the div after saving.
     document.querySelector("body .info").innerHTML = "";
     console.log(savedSongsList);
+
+    //update the visible list
+    updatedSavedList();
 }
 
 /**
@@ -214,6 +225,37 @@ function htmlReformatTime(aot){
         tor += "00";
     }
     return tor;
+}
+// testyoutube();
+
+function updatedSavedList(){
+    savedSongsList.forEach((songInstance)=>{
+        let div = document.createElement("div");
+        div.classList.add("songInstance")
+
+        let image = document.createElement("img");
+        image.src = songInstance.imagesrc;
+        
+        let textWrapper = document.createElement("div");
+        textWrapper.classList.add("textWrapper");
+
+        let title = document.createElement("h1");
+        title.innerText = songInstance.title;
+        
+        let artist = document.createElement("p");
+        artist.innerText = songInstance.vidCreator;
+
+        textWrapper.appendChild(title);
+        textWrapper.appendChild(artist);
+
+        let duration = document.createElement("p");
+        duration.innerHTML = htmlReformatTime(songInstance.duration);
+        
+        div.appendChild(image);
+        div.appendChild(textWrapper);
+        div.appendChild(duration)
+        document.querySelector("body .savedInfo").appendChild(div);
+    })
 }
 
 // handle slideBar
