@@ -33,6 +33,7 @@
     margin: 0;
     margin-top: 3rem;
     line-height: 5rem;
+    text-shadow: 2px 2px var(--highlight-color);
 }
 
 .innerOverlay h2{
