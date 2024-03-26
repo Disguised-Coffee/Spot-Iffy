@@ -14,9 +14,12 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
         height: '0', // For getting it into a 
         width: '0',
-        videoId: 'E9FUKYfh2AI', // TODO: see how this works w/o this line
+        // videoId: 'E9FUKYfh2AI', // TODO: see how this works w/o this line
         playerVars: {
             'playsinline': 1
+        },
+        events:{
+            'onReady': onPlayerReady,
         }
     });
 }
@@ -45,7 +48,15 @@ playButton.addEventListener("click", (event) => {
 })
 
 let skipButton = document.querySelector('#skip')
-//player.nextVideo()
+//player.nextVideo() 
 
 let prevButton = document.querySelector('#prev')
 // player.previousVideo()
+
+
+function applyPlaylist(){
+    //push songs to end of playlist
+    savedSongsList.forEach((song)=>{
+        player.loadVIdeoById(song.videoID,)
+    });
+}

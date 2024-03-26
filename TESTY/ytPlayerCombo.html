@@ -1,41 +1,120 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <!-- https://developers.google.com/youtube/iframe_api_reference#Playback_controls -->
-    <!-- Thank you Google for nice documentation. -->
-    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    <div id="player"></div>
 
-    <button id="pause">pause</button>
+<head>
+  <style>
+    .wrapper {
+      display: flex;
+    }
 
-    <button id="play">Click me!</button>
+    .info {
+      width: 55vw;
+      margin: 2%;
+      height: 59vh;
+      background-color: var(--alt-bg-color);
+      overflow-y: auto;
+    }
 
-    
-    <p>Some information</p>
-    <caption id="info"></caption>
+    .savedInfo {
+      width: 35vw;
+      margin: 2%;
+      height: 59vh;
+      overflow-y: auto;
+      background-color: var(--alt-bg-color);
+    }
 
-    <label>Enter Youtube API key</label><input type="text" id="api"><br><br>
+    .songInstance {
+      display: flex;
+      flex-direction: row;
+      background-color: #0c0b0b;
+    }
 
-    <label>Type your song in the box!</label><input type="text" id="query"><br>
-    <label>Max search results (lower numbers are faster!) </label>
+    .songInstance h1 {
+      font-size: 1rem;
+    }
 
-    <!-- REPLACE THIS WITH A SLIDER IN FINAL -->
-    <!-- https://www.w3schools.com/howto/howto_js_rangeslider.asp -->
+    button {
+      height: max-content;
+      width: max-content;
+      appearance: none;
+      background-color: var(--main-color);
+      border: 1px solid var(--main-color);
+      /* border-radius: 0.375rem; */
+      box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+      box-sizing: border-box;
+      color: #fff;
+      cursor: pointer;
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: normal;
+      padding: 6px 16px;
+      position: relative;
+      text-align: center;
+      text-decoration: none;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      vertical-align: middle;
+      white-space: nowrap;
+      transition: all .2s ease-in-out;
+    }
 
-    <div class="slidecontainer">
-        <input name="test" type="range" min="1" max="10" value="3" class="slider" id="myRange">
-        <p>Value: <span id="demo"></span></p>
-    </div>
-    <br>
-        <button onclick="submitYoutubeSearch()">~ Press me to search Youtube! ~</button><br>
+    button:hover {
+      transform: scale(1.1);
+    }
+  </style>
+  <link href="../css/default.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <!-- https://developers.google.com/youtube/iframe_api_reference#Playback_controls -->
+  <!-- Thank you Google for nice documentation. -->
+  <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+  <div id="player"></div>
+
+  <button id="pause">pause</button>
+
+  <button id="play">Click me!</button>
+
+  <button id="save" onclick="applyPlaylist()">Save current playlist</button>
+
+  <p>Some information</p>
+  <caption id="info"></caption>
+
+  <label>Enter Youtube API key</label><input type="text" id="api"><br><br>
+
+  <label>Type your song in the box!</label><input type="text" id="query"><br>
+  <label>Max search results (lower numbers are faster!) </label>
+
+  <!-- REPLACE THIS WITH A SLIDER IN FINAL -->
+  <!-- https://www.w3schools.com/howto/howto_js_rangeslider.asp -->
+
+  <div class="slidecontainer">
+    <input name="test" type="range" min="1" max="10" value="3" class="slider" id="myRange">
+    <p>Value: <span id="demo"></span></p>
+  </div>
+  <br>
+  <button onclick="submitYoutubeSearch()">~ Press me to search Youtube! ~</button><br>
+  <div class="wrapper">
     <div class="info"></div>
+    <div class="savedInfo">
+      <!-- TODO, DELETE THIS -->
+      <div class="songInstance"><img src="https://i.ytimg.com/vi/Ui-XxPTNv8Q/default.jpg">
+        <div class="textWrapper">
+          <h1>BYE (Lyric Video) - Peso Pluma</h1>
+          <p>Peso Pluma</p>
+        </div>
+        <p>3:33</p>
+      </div>
+    </div>
+  </div>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <!-- <script src="queryHandler.js"></script> -->
+  <script src="../js/ytPlayerHandler.js"></script>
+  <script src="queryHandler.js"></script>
 
 
-    <script src="https://apis.google.com/js/api.js"></script>
-    <!-- <script src="queryHandler.js"></script> -->
-    <script src="../js/ytPlayerHandler.js"></script>
-    <script src="queryHandler.js"></script>
-    <link href="slidebar.css" rel="stylesheet" type="text/css" />
+</body>
 
-  </body>
 </html>
